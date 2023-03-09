@@ -59,8 +59,23 @@ contract ERC721MintableRoyaltyExtend is ERC721URIStorage, ERC2981, AccessControl
         return true;
     }
 
+    function contractURI() public view returns (string memory) {
+        return _contractURI;
+    }
+
+    ///#if_succeeds (keccak256(abi.encodePacked((_contractURI))) == keccak256(abi.encodePacked((contractURI_))));
+    function setContractURI(string memory contractURI_)
+        public
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        if (!(bytes(contractURI_).length > 1)) {
+            revert ContractURIIsEmpty();
+        }
+        _contractURI = contractURI_;
+    }
+
     ///#if_succeeds let receiver, _ := royaltyInfo(0, 10000) in receiver == receiver_;
-    function setRoyalties(address receiver_, uint96 feeNumerator_)
+    function setDefaultRoyalty(address receiver_, uint96 feeNumerator_)
         external
         onlyRole(DEFAULT_ADMIN_ROLE)
     {
@@ -73,10 +88,6 @@ contract ERC721MintableRoyaltyExtend is ERC721URIStorage, ERC2981, AccessControl
         onlyRole(DEFAULT_ADMIN_ROLE)
     {
         _deleteDefaultRoyalty();
-    }
-
-    function contractURI() public view returns (string memory) {
-        return _contractURI;
     }
 
     ///#if_succeeds let receiver, _ := royaltyInfo(tokenId_, 10000) in receiver == receiver_;
@@ -97,17 +108,6 @@ contract ERC721MintableRoyaltyExtend is ERC721URIStorage, ERC2981, AccessControl
         require(_exists(tokenId_), "ERC721MintableRoyaltyExtend: resetTokenRoyalty for nonexistent token");
 
         _resetTokenRoyalty(tokenId_);
-    }
-
-    ///#if_succeeds (keccak256(abi.encodePacked((_contractURI))) == keccak256(abi.encodePacked((contractURI_))));
-    function setContractURI(string memory contractURI_)
-        public
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
-        if (!(bytes(contractURI_).length > 1)) {
-            revert ContractURIIsEmpty();
-        }
-        _contractURI = contractURI_;
     }
 
     // Overrides

@@ -269,7 +269,7 @@ contract("ERC721MintableRoyaltyExtend", async (accounts) => {
     });
 
     it("should set royalties", async () => {
-        await instance.setRoyalties(accounts[0], 250, { from: accounts[0] });
+        await instance.setDefaultRoyalty(accounts[0], 250, { from: accounts[0] });
 
         const response = await instance.royaltyInfo(0, 10000);
         assert.equal(accounts[0], response[0]);
@@ -278,21 +278,21 @@ contract("ERC721MintableRoyaltyExtend", async (accounts) => {
 
     it("should revert as setting receiver to zero address", async () => {
         await expectRevert(
-            instance.setRoyalties(constants.ZERO_ADDRESS, 100),
+            instance.setDefaultRoyalty(constants.ZERO_ADDRESS, 100),
             "ERC2981: invalid receiver"
         )
     });
 
     it("should revert as royalties are too high", async () => {
         await expectRevert(
-            instance.setRoyalties(constants.ZERO_ADDRESS, 10001, { from: accounts[0] }),
+            instance.setDefaultRoyalty(constants.ZERO_ADDRESS, 10001, { from: accounts[0] }),
             "ERC2981: royalty fee will exceed salePrice"
         )
     });
 
     it("should revert as caller is not admin", async () => {
         try {
-            await instance.setRoyalties(constants.ZERO_ADDRESS, 100, { from: accounts[1] });
+            await instance.setDefaultRoyalty(constants.ZERO_ADDRESS, 100, { from: accounts[1] });
         } catch (e) {
             assert.include(e.message, "is missing role");
         }
@@ -340,7 +340,7 @@ contract("ERC721MintableRoyaltyExtend", async (accounts) => {
     });
 
     it("should the default be modified, the token royalty should remain unchanged", async () => {
-        await instance.setRoyalties(accounts[0], 250, { from: accounts[0] });
+        await instance.setDefaultRoyalty(accounts[0], 250, { from: accounts[0] });
 
         const response = await instance.royaltyInfo(0, 10000);
         assert.equal(accounts[0], response[0]);
