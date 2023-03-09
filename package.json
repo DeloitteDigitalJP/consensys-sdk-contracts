@@ -4,6 +4,7 @@
   "description": "Infura SDK: easily manage, interact with and read smart contracts on mainnet, testnets and locally.",
   "scripts": {
     "test": "truffle test",
+    "shorttest": "truffle test ./test/testerc721mintableroyaltyextend.js",
     "prettier": "prettier --write 'contracts/**/*.sol'"
   },
   "dependencies": {

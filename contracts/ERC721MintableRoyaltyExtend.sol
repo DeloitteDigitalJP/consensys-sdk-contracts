@@ -67,6 +67,14 @@ contract ERC721MintableRoyaltyExtend is ERC721URIStorage, ERC2981, AccessControl
         _setDefaultRoyalty(receiver_, feeNumerator_);
     }
 
+    ///#if_succeeds let receiver, _ := royaltyInfo(0, 10000) in receiver == address(0);
+    function deleteDefaultRoyalty()
+        external
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        _deleteDefaultRoyalty();
+    }
+
     function contractURI() public view returns (string memory) {
         return _contractURI;
     }
