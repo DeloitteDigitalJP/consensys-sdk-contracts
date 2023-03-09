@@ -318,7 +318,7 @@ contract("ERC721MintableRoyaltyExtend", async (accounts) => {
 
     // setTokenRoyalty
 
-    let royaltyTokenId1, royaltyTokenId2, royaltyTokenId3;
+    let royaltyTokenId1, royaltyTokenId2;
     it("should set token royalties", async () => {
         royaltyTokenId1 = (await instance.mintWithTokenURI(accounts[1], "ipfs://mysuperhash/0", { from: accounts[0] })).logs[0].args.tokenId;
         royaltyTokenId2 = (await instance.mintWithTokenURI(accounts[1], "ipfs://mysuperhash/0", { from: accounts[0] })).logs[0].args.tokenId;
@@ -382,6 +382,28 @@ contract("ERC721MintableRoyaltyExtend", async (accounts) => {
             instance.setTokenRoyalty(royaltyTokenId2 + 1, accounts[1], 100, { from: accounts[0] }),
             "ERC721MintableRoyaltyExtend: setTokenRoyalty for nonexistent token"
         )
+    });
+
+    // resetTokenRoyalty
+
+    it("should the token royalty be reset, the default will be used", async () => {
+        await instance.resetTokenRoyalty(royaltyTokenId2, { from: accounts[0] });
+
+        const response1 = await instance.royaltyInfo(royaltyTokenId1, 10000);
+        assert.equal(accounts[1], response1[0]);
+        assert.equal(100, response1[1].toNumber());
+
+        const response2 = await instance.royaltyInfo(royaltyTokenId2, 10000);
+        assert.equal(accounts[0], response2[0]);
+        assert.equal(250, response2[1].toNumber());
+    });
+
+    it("should revert as caller is not admin", async () => {
+        try {
+            await instance.resetTokenRoyalty(royaltyTokenId2, { from: accounts[1] });
+        } catch (e) {
+            assert.include(e.message, "is missing role");
+        }
     });
 
     // View Methods

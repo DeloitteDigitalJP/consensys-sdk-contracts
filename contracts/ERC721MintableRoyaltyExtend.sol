@@ -89,6 +89,16 @@ contract ERC721MintableRoyaltyExtend is ERC721URIStorage, ERC2981, AccessControl
         _setTokenRoyalty(tokenId_, receiver_, feeNumerator_);
     }
 
+    ///#if_succeeds let receiver, _ := royaltyInfo(tokenId_, 10000) in receiver == address(0);
+    function resetTokenRoyalty(uint256 tokenId_)
+        external
+        onlyRole(DEFAULT_ADMIN_ROLE)
+    {
+        require(_exists(tokenId_), "ERC721MintableRoyaltyExtend: resetTokenRoyalty for nonexistent token");
+
+        _resetTokenRoyalty(tokenId_);
+    }
+
     ///#if_succeeds (keccak256(abi.encodePacked((_contractURI))) == keccak256(abi.encodePacked((contractURI_))));
     function setContractURI(string memory contractURI_)
         public
