@@ -289,8 +289,8 @@
     "version": "0.8.13+commit.abaa5c0e.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.7",
-  "updatedAt": "2022-11-02T11:55:39.208Z",
+  "schemaVersion": "3.4.13",
+  "updatedAt": "2023-03-09T05:59:28.994Z",
   "devdoc": {
     "details": "Interface for the NFT Royalty Standard. A standardized way to retrieve royalty payment information for non-fungible tokens (NFTs) to enable universal support for royalty payments across all NFT marketplaces and ecosystem participants. _Available since v4.5._",
     "kind": "dev",
@@ -317,7 +317,7 @@
       "id": "0x2cdc5c5f756f555319272af6740217ecb0d9451b44e748689b42eb518eb5ef1b"
     },
     "contract": {
-      "id": "0x864ab4d83ff269f9f93955d65d2bae50c6414761a3b9e8487dcae335612cd89d"
+      "id": "0xcbab9b98e42116c420cd9ea42bafb9b21d1311d781773ab92fe77145ba6e419f"
     }
   }
 }

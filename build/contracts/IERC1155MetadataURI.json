@@ -502,8 +502,8 @@
     "version": "0.8.13+commit.abaa5c0e.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.7",
-  "updatedAt": "2022-11-02T11:55:39.216Z",
+  "schemaVersion": "3.4.13",
+  "updatedAt": "2023-03-09T05:59:29.055Z",
   "devdoc": {
     "details": "Interface of the optional ERC1155MetadataExtension interface, as defined in the https://eips.ethereum.org/EIPS/eip-1155#metadata-extensions[EIP]. _Available since v3.1._",
     "kind": "dev",
@@ -548,7 +548,7 @@
       "id": "0x2cdc5c5f756f555319272af6740217ecb0d9451b44e748689b42eb518eb5ef1b"
     },
     "contract": {
-      "id": "0xa55b5866ded6b13eac962c14e70e6a6e81822e068821457aaa5195f10f9a5db3"
+      "id": "0xa4e92f9c6f47bbd218f29ebf3ac21ab8c13cbced76a22cb1dacb7202a731784e"
     }
   }
 }

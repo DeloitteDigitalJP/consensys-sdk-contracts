@@ -1650,8 +1650,8 @@
     "version": "0.8.13+commit.abaa5c0e.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.7",
-  "updatedAt": "2022-11-02T11:55:39.221Z",
+  "schemaVersion": "3.4.13",
+  "updatedAt": "2023-03-09T05:59:29.091Z",
   "devdoc": {
     "details": "Required interface of an ERC721 compliant contract.",
     "events": {
@@ -1713,7 +1713,7 @@
       "id": "0x2cdc5c5f756f555319272af6740217ecb0d9451b44e748689b42eb518eb5ef1b"
     },
     "contract": {
-      "id": "0x0705118c7c2572b22e71e096f236054c2380af7cb048dab41a7281fc66179196"
+      "id": "0xcbd17d71736770e437135ed91464db005a2b3e0ce4db84e530d295b16bf3e9fb"
     }
   }
 }
