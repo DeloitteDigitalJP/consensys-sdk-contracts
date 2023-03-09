@@ -316,39 +316,31 @@ contract("ERC721MintableRoyaltyExtend", async (accounts) => {
         }
     });
 
-    // TokenRoyalty
+    // setTokenRoyalty
 
-    let royaltyTokenId1, royaltyTokenId2;
-    it("should have default royalties initially", async () => {
+    let royaltyTokenId1, royaltyTokenId2, royaltyTokenId3;
+    it("should set token royalties", async () => {
         royaltyTokenId1 = (await instance.mintWithTokenURI(accounts[1], "ipfs://mysuperhash/0", { from: accounts[0] })).logs[0].args.tokenId;
         royaltyTokenId2 = (await instance.mintWithTokenURI(accounts[1], "ipfs://mysuperhash/0", { from: accounts[0] })).logs[0].args.tokenId;
 
-        {
-            const response1 = await instance.royaltyInfo(royaltyTokenId1, 10000);
-            assert.equal(constants.ZERO_ADDRESS, response1[0]);
-            assert.equal(0, response1[1].toNumber());
-    
-            const response2 = await instance.royaltyInfo(royaltyTokenId2, 10000);
-            assert.equal(constants.ZERO_ADDRESS, response2[0]);
-            assert.equal(0, response2[1].toNumber());
-        }
-
-        await instance.setRoyalties(accounts[0], 250, { from: accounts[0] });
-
-        {
-            const response1 = await instance.royaltyInfo(royaltyTokenId1, 10000);
-            assert.equal(accounts[0], response1[0]);
-            assert.equal(250, response1[1].toNumber());
-    
-            const response2 = await instance.royaltyInfo(royaltyTokenId2, 10000);
-            assert.equal(accounts[0], response2[0]);
-            assert.equal(250, response2[1].toNumber());
-        }
-    });
-
-    it("should set token royalties", async () => {
         await instance.setTokenRoyalty(royaltyTokenId1, accounts[1], 100, { from: accounts[0] });
         await instance.setTokenRoyalty(royaltyTokenId2, accounts[2], 200, { from: accounts[0] });
+
+        const response = await instance.royaltyInfo(0, 10000);
+        assert.equal(constants.ZERO_ADDRESS, response[0]);
+        assert.equal(0, response[1].toNumber());
+
+        const response1 = await instance.royaltyInfo(royaltyTokenId1, 10000);
+        assert.equal(accounts[1], response1[0]);
+        assert.equal(100, response1[1].toNumber());
+
+        const response2 = await instance.royaltyInfo(royaltyTokenId2, 10000);
+        assert.equal(accounts[2], response2[0]);
+        assert.equal(200, response2[1].toNumber());
+    });
+
+    it("should the default be modified, the token royalty should remain unchanged", async () => {
+        await instance.setRoyalties(accounts[0], 250, { from: accounts[0] });
 
         const response = await instance.royaltyInfo(0, 10000);
         assert.equal(accounts[0], response[0]);
