@@ -77,6 +77,56 @@ contract("ERC721MintableRoyaltyExtend", async (accounts) => {
         }
     });
 
+    // Mint With Royalty
+
+    it("should mint a new token", async () => {
+        const tokenURIToStore = "ipfs://mysuperhash/0";
+        const receipt = await instance.mintWithTokenURIAndRoyalty(accounts[1], tokenURIToStore, accounts[2], 100, { from: accounts[0] });
+
+        const balanceOfAccount1 = await instance.balanceOf.call(accounts[1]);
+        assert.equal(3, balanceOfAccount1.toString());
+
+        const tokenURI = await instance.tokenURI.call(2);
+        assert.equal(tokenURIToStore, tokenURI);
+
+        const response = await instance.royaltyInfo(2, 10000);
+        assert.equal(accounts[2], response[0]);
+        assert.equal(100, response[1].toNumber());
+
+        expectEvent(receipt, 'Transfer', {
+            from: constants.ZERO_ADDRESS,
+            to: accounts[1],
+            tokenId: new BN(2),
+        });
+    });
+
+    it("should not let you mint with empty tokenURI", async () => {
+        await expectRevert.unspecified(
+            instance.mintWithTokenURIAndRoyalty(accounts[1], "", accounts[2], 100, { from: accounts[0] })
+        );
+    });
+
+    it("should fail because account is not allowed to mint", async () => {
+        try {
+            await instance.mintWithTokenURIAndRoyalty(accounts[1], "ipfs://mysuperhash/0", accounts[2], 100, { from: accounts[1] });
+        } catch (e) {
+            assert.include(e.message, "is missing role");
+        }
+    });
+
+    it("should return owner address", async () => {
+        const owner = await instance.ownerOf.call(0);
+        assert.equal(accounts[1], owner);
+    });
+
+    it("should throw exception because token doesn't exist", async () => {
+        try {
+            await instance.ownerOf(1000);
+        } catch (e) {
+            assert.include(e.message, "ERC721: owner query for nonexistent token");
+        }
+    });
+
     // Roles
 
     it("should grant minter role to address", async () => {
@@ -410,7 +460,7 @@ contract("ERC721MintableRoyaltyExtend", async (accounts) => {
 
     it("should return correct balanceOf", async () => {
         const response = await instance.balanceOf(accounts[1]);
-        assert.equal(4, response.toNumber());
+        assert.equal(5, response.toNumber());
     });
 
     it("should return the DEFAULT_ADMIN bytes code", async () => {

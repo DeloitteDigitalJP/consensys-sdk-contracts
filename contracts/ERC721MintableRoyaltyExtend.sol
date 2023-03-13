@@ -59,6 +59,25 @@ contract ERC721MintableRoyaltyExtend is ERC721URIStorage, ERC2981, AccessControl
         return true;
     }
 
+    /// @notice NFT minting with metadata i.e tokenURI and set token royalty
+    /// @notice Each mint will increment the tokenId, starting from 0
+    ///#if_succeeds old(balanceOf(to_)) + 1 == balanceOf(to_);
+    function mintWithTokenURIAndRoyalty(address to_, string memory tokenURI_, address receiver_, uint96 feeNumerator_)
+        public
+        onlyRole(MINTER_ROLE)
+        returns (bool)
+    {
+        if (!(bytes(tokenURI_).length > 1)) {
+            revert TokenURIIsEmpty();
+        }
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
+        _mint(to_, tokenId);
+        _setTokenURI(tokenId, tokenURI_);
+        _setTokenRoyalty(tokenId, receiver_, feeNumerator_);
+        return true;
+    }
+
     function contractURI() public view returns (string memory) {
         return _contractURI;
     }
