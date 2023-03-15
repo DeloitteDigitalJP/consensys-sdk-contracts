@@ -14,7 +14,12 @@ error TokenURIIsEmpty();
 /// ContractURI cannot be empty;
 error ContractURIIsEmpty();
 
-contract ERC721MintableRoyaltyExtend is ERC721URIStorage, ERC2981, AccessControl, Ownable {
+contract ERC721MintableRoyaltyExtend is
+    ERC721URIStorage,
+    ERC2981,
+    AccessControl,
+    Ownable
+{
     using Counters for Counters.Counter;
     /// @dev Counter auto-incrementating NFT tokenIds, default: 0
     Counters.Counter private _tokenIdCounter;
@@ -62,11 +67,12 @@ contract ERC721MintableRoyaltyExtend is ERC721URIStorage, ERC2981, AccessControl
     /// @notice NFT minting with metadata i.e tokenURI and set token royalty
     /// @notice Each mint will increment the tokenId, starting from 0
     ///#if_succeeds old(balanceOf(to_)) + 1 == balanceOf(to_);
-    function mintWithTokenURIAndRoyalty(address to_, string memory tokenURI_, address receiver_, uint96 feeNumerator_)
-        public
-        onlyRole(MINTER_ROLE)
-        returns (bool)
-    {
+    function mintWithTokenURIAndRoyalty(
+        address to_,
+        string memory tokenURI_,
+        address receiver_,
+        uint96 feeNumerator_
+    ) public onlyRole(MINTER_ROLE) returns (bool) {
         if (!(bytes(tokenURI_).length > 1)) {
             revert TokenURIIsEmpty();
         }
@@ -102,19 +108,20 @@ contract ERC721MintableRoyaltyExtend is ERC721URIStorage, ERC2981, AccessControl
     }
 
     ///#if_succeeds let receiver, _ := royaltyInfo(0, 10000) in receiver == address(0);
-    function deleteDefaultRoyalty()
-        external
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
+    function deleteDefaultRoyalty() external onlyRole(DEFAULT_ADMIN_ROLE) {
         _deleteDefaultRoyalty();
     }
 
     ///#if_succeeds let receiver, _ := royaltyInfo(tokenId_, 10000) in receiver == receiver_;
-    function setTokenRoyalty(uint256 tokenId_, address receiver_, uint96 feeNumerator_)
-        external
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
-        require(_exists(tokenId_), "ERC721MintableRoyaltyExtend: setTokenRoyalty for nonexistent token");
+    function setTokenRoyalty(
+        uint256 tokenId_,
+        address receiver_,
+        uint96 feeNumerator_
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(
+            _exists(tokenId_),
+            "ERC721MintableRoyaltyExtend: setTokenRoyalty for nonexistent token"
+        );
 
         _setTokenRoyalty(tokenId_, receiver_, feeNumerator_);
     }
@@ -124,7 +131,10 @@ contract ERC721MintableRoyaltyExtend is ERC721URIStorage, ERC2981, AccessControl
         external
         onlyRole(DEFAULT_ADMIN_ROLE)
     {
-        require(_exists(tokenId_), "ERC721MintableRoyaltyExtend: resetTokenRoyalty for nonexistent token");
+        require(
+            _exists(tokenId_),
+            "ERC721MintableRoyaltyExtend: resetTokenRoyalty for nonexistent token"
+        );
 
         _resetTokenRoyalty(tokenId_);
     }
