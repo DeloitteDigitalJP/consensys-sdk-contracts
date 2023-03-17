@@ -2564,8 +2564,8 @@
     "version": "0.8.13+commit.abaa5c0e.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.7",
-  "updatedAt": "2022-11-02T11:55:39.225Z",
+  "schemaVersion": "3.4.13",
+  "updatedAt": "2023-03-09T05:59:29.146Z",
   "devdoc": {
     "details": "String operations.",
     "kind": "dev",
@@ -2585,7 +2585,7 @@
       "id": "0x9b02e4f854c7d26e07bf288ada3f54b125844c0fa8b7e9f02cb7bf1693a388b7"
     },
     "contract": {
-      "id": "0xf4cfe990ff68e9204b8adc50f117e7ea88fda74cf65584ef6a35be316baa6c73"
+      "id": "0x4cef00fba82576dc10c234f28bbdb4030e2e13c08998352b7a1d6cd1506a2741"
     }
   }
 }

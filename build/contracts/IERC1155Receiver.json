@@ -610,8 +610,8 @@
     "version": "0.8.13+commit.abaa5c0e.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.7",
-  "updatedAt": "2022-11-02T11:55:39.215Z",
+  "schemaVersion": "3.4.13",
+  "updatedAt": "2023-03-09T05:59:29.050Z",
   "devdoc": {
     "details": "_Available since v3.1._",
     "kind": "dev",
@@ -661,7 +661,7 @@
       "id": "0x2cdc5c5f756f555319272af6740217ecb0d9451b44e748689b42eb518eb5ef1b"
     },
     "contract": {
-      "id": "0x00a0ec804c0b90369df44d6fb2e1680a11c9dad331795d01c30b161f0ce4e20f"
+      "id": "0xfaa4a5e91d998181790c8e7978971c449880ae21b3066061c3b8ca7c56641aec"
     }
   }
 }
